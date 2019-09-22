@@ -18,7 +18,7 @@ class GreetingControllerIntegrationTest {
     @Autowired
     lateinit var restTemplate: TestRestTemplate
 
-    /* Controller Integration Test using S */
+    /* Controller Integration Test using TestRestTemplate */
     @Test
     fun `GET when given name is Karan then returns "Hello, Karan"`() {
 
