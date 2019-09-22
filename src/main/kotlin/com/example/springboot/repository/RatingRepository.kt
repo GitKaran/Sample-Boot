@@ -37,6 +37,5 @@ class RatingRepository(
                             record[RATING.RATING_]
                     )
                 }
-
     }
 }
