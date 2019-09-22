@@ -31,24 +31,6 @@ class GreetingControllerIntegrationTest {
 
     }
 
-    @Test
-    fun `Get all posts from jsonplaceholder via RestTemplate Client`() {
-        RestAssured.given().log().all()
-                .contentType("application/json")
-                .get("http://localhost:9095/internal/posts")
-                .then().log().body()
-                .statusCode(200)
-    }
-
-    @Test
-    fun `Get all quotes via RestTemplate Client`() {
-        RestAssured.given().log().all()
-                .contentType("application/json")
-                .get("http://localhost:9095/internal/quotes")
-                .then().log().body()
-                .statusCode(200)
-    }
-
     /* Controller Integration Test using Rest Assured */
 
     @Before

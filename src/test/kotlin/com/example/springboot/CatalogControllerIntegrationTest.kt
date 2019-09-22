@@ -13,14 +13,14 @@ class CatalogControllerIntegrationTest {
 
     @Test
     fun `Should return 200 and retrieve movie name, description and rating for given userId`() {
-        val userId = 100
+        val userId = 501
         RestAssured.given().log().all()
                 .contentType("application/json")
                 .get("http://localhost:9095/catalog/$userId")
                 .then().log().body()
                 .statusCode(200)
-                .content("movieId", Matchers.contains(105,106))
-                .content("rating", Matchers.contains(8,9))
+                .content("movieId", Matchers.contains(101,102))
+                .content("rating", Matchers.contains(11,12))
                 .content("name", Matchers.notNullValue())
                 .content("desc", Matchers.notNullValue())
     }
