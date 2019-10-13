@@ -13,14 +13,15 @@ class RatingControllerIntegrationTest {
 
     @Test
     fun `Should return 200, movie ids and respective ratings for a given userId`() {
-        val userId = 100
+        val userId = 501
         RestAssured.given().log().all()
                 .contentType("application/json")
                 .get("http://localhost:9095/ratings/$userId")
                 .then().log().body()
                 .statusCode(200)
-                .content("userRating.movieId", Matchers.contains(105,106))
-                .content("userRating.rating", Matchers.contains(8,9))
+                .content("userRating.movieId", Matchers.contains(101,102))
+                .content("userRating.rating", Matchers.contains(11,12))
+                .content("userId", Matchers.equalTo(userId))
     }
 
     @Test
@@ -35,13 +36,13 @@ class RatingControllerIntegrationTest {
 
     @Test
     fun `Should return 200, rating for a given movieId`() {
-        val movieId = 100
+        val movieId = 103
         RestAssured.given().log().all()
                 .contentType("application/json")
                 .get("http://localhost:9095/ratings/movies/$movieId")
                 .then().log().body()
                 .statusCode(200)
                 .content("movieId", Matchers.comparesEqualTo(movieId))
-                .content("rating", Matchers.comparesEqualTo(5))
+                .content("rating", Matchers.comparesEqualTo(13))
     }
 }

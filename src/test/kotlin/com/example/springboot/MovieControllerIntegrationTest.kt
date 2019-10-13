@@ -1,6 +1,7 @@
 package com.example.springboot
 
 import com.jayway.restassured.RestAssured
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasEntry
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,6 +20,9 @@ class MovieControllerIntegrationTest {
                 .get("http://localhost:9095/movies/$movieId")
                 .then().log().body()
                 .statusCode(200)
+                .content("name", Matchers.notNullValue())
+                .content("description", Matchers.notNullValue())
+                .content("movieId", Matchers.equalTo(movieId))
     }
 
     @Test

@@ -18,7 +18,7 @@ class GreetingControllerIntegrationTest {
     @Autowired
     lateinit var restTemplate: TestRestTemplate
 
-    /* Controller Integration Test using S */
+    /* Controller Integration Test using TestRestTemplate */
     @Test
     fun `GET when given name is Karan then returns "Hello, Karan"`() {
 
@@ -29,24 +29,6 @@ class GreetingControllerIntegrationTest {
         // Then
         assertThat(body).isEqualTo("Hello, $name")
 
-    }
-
-    @Test
-    fun `Get all posts from jsonplaceholder via RestTemplate Client`() {
-        RestAssured.given().log().all()
-                .contentType("application/json")
-                .get("http://localhost:9095/internal/posts")
-                .then().log().body()
-                .statusCode(200)
-    }
-
-    @Test
-    fun `Get all quotes via RestTemplate Client`() {
-        RestAssured.given().log().all()
-                .contentType("application/json")
-                .get("http://localhost:9095/internal/quotes")
-                .then().log().body()
-                .statusCode(200)
     }
 
     /* Controller Integration Test using Rest Assured */

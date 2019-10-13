@@ -18,6 +18,10 @@
 		<java.version>1.8</java.version>
 		<kotlin.version>1.2.71</kotlin.version>
 		<rest-assured-version>2.9.0</rest-assured-version>
+		<postgresql.version>42.2.8</postgresql.version>
+		<jooq.version>3.12.1</jooq.version>
+		<jooq-codegen-maven.version>3.12.1</jooq-codegen-maven.version>
+		<flyway.version>5.2.4</flyway.version> <!--Spring Boot is not yet compatible with Flyway 6.0.-->
 	</properties>
 
 	<dependencies>
@@ -38,11 +42,31 @@
 			<artifactId>kotlin-stdlib-jdk8</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<version>${jooq.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>${rest-assured-version}</version>
 		</dependency>
-
+<!--Database-->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${flyway.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jooq</artifactId>
+		</dependency>
+<!--Test-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -76,6 +100,90 @@
 						<version>${kotlin.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+<!--Flyway plugin configuration-->
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway.version}</version>
+				<configuration>
+					<url>jdbc:postgresql://localhost:5432/postgres</url>
+					<schemas>
+						<schema>public</schema>
+					</schemas>
+					<user>postgres</user>
+					<password>docker</password>
+					<locations>
+						<location>filesystem:/${basedir}/src/main/resources/db/migration</location>
+					</locations>
+				</configuration>
+				<executions>
+					<execution>
+						<id>migrate-database</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>migrate</goal>
+							<goal>validate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+<!--JOOQ Plugin Configuration-->
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>${jooq-codegen-maven.version}</version>
+
+				<!-- The jOOQ code generation plugin is also
+                     executed in the generate-sources phase,
+                     prior to compilation -->
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<!-- This is a minimal  configuration.
+                     for the code generator  -->
+				<configuration>
+					<jdbc>
+						<url>jdbc:postgresql://localhost:5432/postgres</url>
+						<user>postgres</user>
+						<password>docker</password>
+					</jdbc>
+					<generator>
+						<database>
+							<includes>.*</includes>
+							<inputSchema>public</inputSchema>
+						</database>
+						<target>
+							<!--<packageName>java.jooq</packageName>-->
+							<directory>src/main/jooq</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
+			<!--configure the build-helper-maven-plugin plugin such that maven will add the JOOQ generated code resides in
+src/main/jooq directory as source folder.-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/main/jooq</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
