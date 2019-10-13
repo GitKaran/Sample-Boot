@@ -23,6 +23,7 @@
 		<jooq-codegen-maven.version>3.12.1</jooq-codegen-maven.version>
 		<flyway.version>5.2.4</flyway.version> <!--Spring Boot is not yet compatible with Flyway 6.0.-->
 		<retrofit.version>2.3.0</retrofit.version>
+		<springfox-swagger2.version>2.8.0</springfox-swagger2.version>
 	</properties>
 
 	<dependencies>
@@ -82,6 +83,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jooq</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox-swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox-swagger2.version}</version>
 		</dependency>
 <!--Test-->
 		<dependency>
