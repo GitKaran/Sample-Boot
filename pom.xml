@@ -24,6 +24,11 @@
 		<flyway.version>5.2.4</flyway.version> <!--Spring Boot is not yet compatible with Flyway 6.0.-->
 		<retrofit.version>2.6.1</retrofit.version>
 		<springfox-swagger2.version>2.8.0</springfox-swagger2.version>
+		<mockito.version>2.10.0</mockito.version>
+		<kotlintest-runner-junit5.version>3.0.0</kotlintest-runner-junit5.version>
+		<kotlintest.version>2.0.7</kotlintest.version>
+		<kotlintest-assertions.version>3.1.0-RC1</kotlintest-assertions.version>
+		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 	</properties>
 
 	<dependencies>
@@ -68,6 +73,12 @@
 			<version>2.3.0</version>
 		</dependency>
 
+		<!--resilience4j for circuit breaker-->
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-circuitbreaker</artifactId>
+			<version>0.15.0</version>
+		</dependency>
 
 		<!--Database-->
 		<dependency>
@@ -98,6 +109,48 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.kotlintest</groupId>
+			<artifactId>kotlintest</artifactId>
+			<version>${kotlintest.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-commons</artifactId>
+			<version>1.5.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-engine</artifactId>
+			<version>1.5.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
