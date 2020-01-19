@@ -1,5 +1,6 @@
 package com.example.springboot.config
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.context.annotation.Bean
@@ -14,6 +15,7 @@ class RetrofitConfig {
 
             val mapper = ObjectMapper()
                     .registerKotlinModule()
+                    .configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false)
 
             val retrofit = Retrofit.Builder()
                     .baseUrl(baseUrl)
@@ -27,4 +29,6 @@ class RetrofitConfig {
     @Bean
     fun petStoreClientApi() =  createRetrofitClient(PetStore::class.java, "https://petstore.swagger.io" )
 
+    @Bean
+    fun movieStoreClientApi() = createRetrofitClient(MovieStoreApi::class.java, "https://api.themoviedb.org")
 }
