@@ -17,7 +17,7 @@ class RatingRepository(
                 .from(RATING)
                 .where(RATING.MOVIE_ID.eq(movieId))
                 .fetchOne()
-                .map { record ->
+                ?.map { record ->
                     Rating(
                             record[RATING.MOVIE_ID],
                             record[RATING.RATING_]
@@ -38,4 +38,16 @@ class RatingRepository(
                     )
                 }
     }
+
+    fun deleteMovieRating(movieId: Int) =
+        dsl.deleteFrom(RATING)
+            .where(RATING.MOVIE_ID.eq(movieId))
+            .execute()
+
+    fun addMovieRating(movieId: Int, ratingId: Int, userId: Int) =
+        dsl.insertInto(RATING)
+            .set(RATING.MOVIE_ID, movieId)
+            .set(RATING.RATING_, ratingId)
+            .set(RATING.USER_ID, userId)
+            .execute()
 }
